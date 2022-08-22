@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Schoolbell&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Schoolbell&display=swap');
 
 body {
     background-color: #202020;
@@ -7,7 +7,7 @@ body {
 *{
     margin: 0;
     padding: 0;
-    font-family: 'Schoolbell', cursive;
+    font-family: 'Orbitron', sans-serif;
 }
 h1,h2,h3,h4,h5,h6,p,input{
     color: #fff;
@@ -19,17 +19,15 @@ nav{
     }
 }
 .character__wraper{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 2.5vh;
     .personaje{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1fr 1fr;
         margin: .5rem auto;
-        height: 35vh;
+        height: 40vh;
         width: 40vw;
         text-align: left;
         user-select: none;
@@ -87,46 +85,165 @@ nav{
 
 .character__info {
     display: none;
-    article {
+    margin: 1rem auto;
+    .card__wraper{
         margin: auto;
         display: grid;
         place-content: center;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        background-color: #c92b2b6e;
-        height: 90vh;
-        padding: 1rem; 
+        grid-template-rows: 1fr 1fr 1fr;
+        background-color: $rojo;
+        height: 80vh;
+        padding: 2rem; 
         position: relative;
-        /* copied from the generator */
         clip-path: polygon(0 80.00px,80.00px 0,calc(100% - 80.00px) 0,100% 80.00px,100% calc(100% - 80.00px),calc(100% - 80.00px) 100%,80.00px 100%,0 calc(100% - 80.00px));
-        ::before{
+        > * {
+            text-align: center;
+        }
+        &::before{
             content:"";
             position:absolute;
             inset:0;
-            background: #cf7f40;
-            /* copied from the generator */
+            background: $naranja;
             clip-path: polygon(0 80.00px,80.00px 0,calc(100% - 80.00px) 0,100% 80.00px,100% calc(100% - 80.00px),calc(100% - 80.00px) 100%,80.00px 100%,0 calc(100% - 80.00px),0 80.00px,10px  calc(80.00px + 4.14px),10px calc(100% - 80.00px - 4.14px),calc(80.00px + 4.14px) calc(100% - 10px),calc(100% - 80.00px - 4.14px) calc(100% - 10px),calc(100% - 10px) calc(100% - 80.00px - 4.14px),calc(100% - 10px) calc(80.00px + 4.14px),calc(100% - 80.00px - 4.14px) 10px,calc(80.00px + 4.14px) 10px,10px calc(80.00px + 4.14px));
         }
-        .card__info--left{
-            grid-area: 1/1/3/1;
+        .card__info--left__last__location{
+            grid-area: 1/1/1/1;
+            margin: .5rem;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: $fondo;
+            align-items: center;  
+            position: relative;
+            clip-path: polygon(0 80.00px,80.00px 0,100% 0,100% calc(100% - 80.00px),calc(100% - 80.00px) 100%,0 100%);
+            &::before{
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: $naranja;
+                clip-path: polygon(0 80.00px,80.00px 0,100% 0,100% calc(100% - 80.00px),calc(100% - 80.00px) 100%,0 100%,0 80.00px,10px  calc(80.00px + 4.14px),10px calc(100% - 10px),calc(100% - 80.00px - 4.14px) calc(100% - 10px),calc(100% - 10px) calc(100% - 80.00px - 4.14px),calc(100% - 10px) 10px,calc(80.00px + 4.14px) 10px,10px calc(80.00px + 4.14px));
+            }
+        }
+        .card__info--left__created{
+            grid-area: 2/1/2/1;
+            margin: .5rem;
+            padding: 1.5rem;
+            height: 25vh;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
+            background-color: $fondo;
             align-items: center;
+            position: relative;
+            clip-path: polygon(0 0,calc(100% - 80.00px) 0,100% 80.00px,100% 100%,80.00px 100%,0 calc(100% - 80.00px));
+            &::before{
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: -1;
+                background: $naranja;
+                clip-path: polygon(0 0,calc(100% - 80.00px) 0,100% 80.00px,100% 100%,80.00px 100%,0 calc(100% - 80.00px),0 0,10px  10px ,10px calc(100% - 80.00px - 4.14px),calc(80.00px + 4.14px) calc(100% - 10px),calc(100% - 10px) calc(100% - 10px),calc(100% - 10px) calc(80.00px + 4.14px),calc(100% - 80.00px - 4.14px) 10px,10px 10px);
+            }
+        }
+        .card__info--left__status{
+            background-color: $fondo;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 25vh;
+            clip-path: polygon(0 80.00px,80.00px 0,calc(100% - 80.00px) 0,100% 80.00px,100% calc(100% - 80.00px),calc(100% - 80.00px) 100%,80.00px 100%,0 calc(100% - 80.00px));
+            position: relative;
+            p {
+                font-size: 3rem;
+            }
+            &::before{
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: -1;
+                background: $naranja;
+                clip-path: polygon(0 80.00px,80.00px 0,calc(100% - 80.00px) 0,100% 80.00px,100% calc(100% - 80.00px),calc(100% - 80.00px) 100%,80.00px 100%,0 calc(100% - 80.00px),0 80.00px,10px  calc(80.00px + 4.14px),10px calc(100% - 80.00px - 4.14px),calc(80.00px + 4.14px) calc(100% - 10px),calc(100% - 80.00px - 4.14px) calc(100% - 10px),calc(100% - 10px) calc(100% - 80.00px - 4.14px),calc(100% - 10px) calc(80.00px + 4.14px),calc(100% - 80.00px - 4.14px) 10px,calc(80.00px + 4.14px) 10px,10px calc(80.00px + 4.14px));
+            }
         }
         .card__info--img{
-            grid-area: 1/2/3/2;
+            grid-area: 1/2/4/2;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
             align-items: center;
             img {
+                border: 10px solid $naranja;
                 object-fit: cover;
                 border-radius: 15px;
             }
         }
-        .card__info--right{
-            grid-area: 1/3/3/3;
+        .card__info--right__name{
+            grid-area: 1/3/1/3;
+            margin: 1rem;
+            height: fit-content;
+            padding: 3rem;
+            display: flex;
+            text-align: center;
+            flex-direction: column;
+            justify-content: space-evenly;
+            background-color: $fondo;
+            align-items: center;  
+            position: relative;
+            clip-path: polygon(0 0,calc(100% - 80.00px) 0,100% 80.00px,100% 100%,80.00px 100%,0 calc(100% - 80.00px));
+            z-index: 0;
+            &::before{
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: -1;
+                background: $naranja;
+                clip-path: polygon(0 0,calc(100% - 80.00px) 0,100% 80.00px,100% 100%,80.00px 100%,0 calc(100% - 80.00px),0 0,10px  10px ,10px calc(100% - 80.00px - 4.14px),calc(80.00px + 4.14px) calc(100% - 10px),calc(100% - 10px) calc(100% - 10px),calc(100% - 10px) calc(80.00px + 4.14px),calc(100% - 80.00px - 4.14px) 10px,10px 10px);
+            }
+        }
+        .card__info--right__vitals{
+            grid-area: 2/3/2/3;
+            margin: 1rem;
+            padding: 1rem;
+            height: 25vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            background-color: $fondo;
+            align-items: center;
+            position: relative;
+            clip-path: polygon(0 80px, 80px 0, 100% 0, 100% calc(100% - 80px), calc(100% - 80px) 100%, 0 100%);
+            &::before{
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: -1;
+                background: $naranja;
+                clip-path: polygon(0 80.00px,80.00px 0,100% 0,100% calc(100% - 80.00px),calc(100% - 80.00px) 100%,0 100%,0 80.00px,10px  calc(80.00px + 4.14px),10px calc(100% - 10px),calc(100% - 80.00px - 4.14px) calc(100% - 10px),calc(100% - 10px) calc(100% - 80.00px - 4.14px),calc(100% - 10px) 10px,calc(80.00px + 4.14px) 10px,10px calc(80.00px + 4.14px));
+            }
+        }
+        .card__info--right__location{
+            grid-area: 3/3/4/3;
+            margin: .5rem;
+            height: fit-content;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            background-color: $fondo;
+            align-items: center;  
+            position: relative;
+            clip-path: polygon(0 80.00px,80.00px 0,100% 0,100% calc(100% - 80.00px),calc(100% - 80.00px) 100%,0 100%);
+            &::before{
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: -1;
+                background: $naranja;
+                clip-path: polygon(0 80.00px,80.00px 0,100% 0,100% calc(100% - 80.00px),calc(100% - 80.00px) 100%,0 100%,0 80.00px,10px  calc(80.00px + 4.14px),10px calc(100% - 10px),calc(100% - 80.00px - 4.14px) calc(100% - 10px),calc(100% - 10px) calc(100% - 80.00px - 4.14px),calc(100% - 10px) 10px,calc(80.00px + 4.14px) 10px,10px calc(80.00px + 4.14px));
+            }
         }
     }
 }
@@ -137,6 +254,7 @@ nav{
     align-items: center;
     gap: .5rem;
     margin: 1rem auto;
+    margin-top: 3rem;
     .nav__buttons{
         user-select: none;
         cursor: pointer;

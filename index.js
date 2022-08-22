@@ -7,6 +7,8 @@ const currentPage = document.querySelector('#current__page')
 const nextPage = document.querySelector('#next__page')
 const lastPage = document.querySelector('#last__page')
 const botones = document.querySelector('.buttons')
+const contenedorStatus = document.querySelector('.card__info--left__status')
+const estado = document.querySelector('#status')
 
 let pagina = 1
 
@@ -55,24 +57,37 @@ const subirAHTML = (array) =>{
 
 const personajeInformacionAHTML = (data) =>{
     return `
-        <article>
-            <div class='card__info--left'>
-                <p>Origin Location:</p>
-                <p>${data.origin.name}</p>
+        <article class='card__wraper'>
+            <div class='card__info--left__last__location'>
                 <p>Last know location:</p>
                 <p>${data.location.name}</p>
+            </div>
+            <div class='card__info--left__created'>
+                <p>Register created: </p>
+                <p>${data.created}</p>
                 <p>Number of times seen:</p>
                 <p>${data.episode.length}</p>
+            </div>
+            <div class='card__info--left__status'>
+                <p id='status'>${data.status}</p>
             </div>
             <div class='card__info--img'>
                 <img src='${data.image}' alt='${data.name}'>
             </div>
-            <div class='card__info--right'>
+            <div class='card__info--right__name'>
                 <h3>${data.name}</h3>
+            </div>
+            <div class='card__info--right__vitals'>
+                <p>Status: </p>
                 <p>${data.status}</p>
+                <p>Species: </p>
                 <p>${data.species}</p>
-                <p>- ${data.type}</p>
+            </div>
+            <div class='card__info--right__location'>
+                <p>Gender: </p>
                 <p>${data.gender}</p>
+                <p>Origin Location:</p>
+                <p>${data.origin.name}</p>
             </div>
         </article>
     `
@@ -96,7 +111,7 @@ const agregarEventoPersonajes = () =>{
 }
 
 home.addEventListener('click', () => {
-    contenedor.style.display = 'flex'
+    contenedor.style.display = 'grid'
     personaje.style.display = 'none'
     botones.style.display = 'flex'
 })
@@ -105,6 +120,7 @@ const enfocarPersonaje = () => {
     contenedor.style.display = 'none'
     personaje.style.display = 'flex'
     botones.style.display = 'none'
+    vivoOMuerto()
 }
 
 const desactivarAtras = () =>{
@@ -167,6 +183,23 @@ const activarSiguientesDesactivarPrevios = () =>{
     desactivarPrimeraPagina()
     activarSiguiente()
     activarUltimaPagina()
+}
+
+const vivoOMuerto = () =>{
+    const cargaron = setTimeout(()=>{
+        const contenedorStatus = document.querySelector('.card__info--left__status')
+        const estado = document.querySelector('#status')
+        console.log(contenedorStatus)
+        console.log(estado)
+        if(estado.innerHTML === 'Alive'){
+            contenedorStatus.style.background = '#88ff00'
+        }else if(estado.innerHTML === 'Dead'){
+            contenedorStatus.style.background = '#cc0000'
+        }else{
+            contenedorStatus.style.background = '#808080'
+        }
+    })
+    cargaron
 }
 
 nextPage.addEventListener('click', () =>{

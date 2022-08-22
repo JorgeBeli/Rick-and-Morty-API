@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Schoolbell&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron&family=Schoolbell&display=swap");
 body {
   background-color: #202020;
 }
@@ -6,7 +6,7 @@ body {
 * {
   margin: 0;
   padding: 0;
-  font-family: "Schoolbell", cursive;
+  font-family: "Orbitron", sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6, p, input {
@@ -19,18 +19,16 @@ nav h1 {
 }
 
 .character__wraper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 2.5vh;
 }
 .character__wraper .personaje {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   margin: 0.5rem auto;
-  height: 35vh;
+  height: 40vh;
   width: 40vw;
   text-align: left;
   user-select: none;
@@ -87,48 +85,167 @@ nav h1 {
 
 .character__info {
   display: none;
+  margin: 1rem auto;
 }
-.character__info article {
+.character__info .card__wraper {
   margin: auto;
   display: grid;
   place-content: center;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  background-color: rgba(201, 43, 43, 0.431372549);
-  height: 90vh;
-  padding: 1rem;
+  grid-template-rows: 1fr 1fr 1fr;
+  background-color: #b73800;
+  height: 80vh;
+  padding: 2rem;
   position: relative;
-  /* copied from the generator */
   clip-path: polygon(0 80px, 80px 0, calc(100% - 80px) 0, 100% 80px, 100% calc(100% - 80px), calc(100% - 80px) 100%, 80px 100%, 0 calc(100% - 80px));
 }
-.character__info article ::before {
+.character__info .card__wraper > * {
+  text-align: center;
+}
+.character__info .card__wraper::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: #cf7f40;
-  /* copied from the generator */
+  background: #f38b14;
   clip-path: polygon(0 80px, 80px 0, calc(100% - 80px) 0, 100% 80px, 100% calc(100% - 80px), calc(100% - 80px) 100%, 80px 100%, 0 calc(100% - 80px), 0 80px, 10px 84.14px, 10px calc(100% - 80px - 4.14px), 84.14px calc(100% - 10px), calc(100% - 80px - 4.14px) calc(100% - 10px), calc(100% - 10px) calc(100% - 80px - 4.14px), calc(100% - 10px) 84.14px, calc(100% - 80px - 4.14px) 10px, 84.14px 10px, 10px 84.14px);
 }
-.character__info article .card__info--left {
-  grid-area: 1/1/3/1;
+.character__info .card__wraper .card__info--left__last__location {
+  grid-area: 1/1/1/1;
+  margin: 0.5rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #e10a00;
+  align-items: center;
+  position: relative;
+  clip-path: polygon(0 80px, 80px 0, 100% 0, 100% calc(100% - 80px), calc(100% - 80px) 100%, 0 100%);
+}
+.character__info .card__wraper .card__info--left__last__location::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #f38b14;
+  clip-path: polygon(0 80px, 80px 0, 100% 0, 100% calc(100% - 80px), calc(100% - 80px) 100%, 0 100%, 0 80px, 10px 84.14px, 10px calc(100% - 10px), calc(100% - 80px - 4.14px) calc(100% - 10px), calc(100% - 10px) calc(100% - 80px - 4.14px), calc(100% - 10px) 10px, 84.14px 10px, 10px 84.14px);
+}
+.character__info .card__wraper .card__info--left__created {
+  grid-area: 2/1/2/1;
+  margin: 0.5rem;
+  padding: 1.5rem;
+  height: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: #e10a00;
+  align-items: center;
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - 80px) 0, 100% 80px, 100% 100%, 80px 100%, 0 calc(100% - 80px));
+}
+.character__info .card__wraper .card__info--left__created::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #f38b14;
+  clip-path: polygon(0 0, calc(100% - 80px) 0, 100% 80px, 100% 100%, 80px 100%, 0 calc(100% - 80px), 0 0, 10px 10px, 10px calc(100% - 80px - 4.14px), 84.14px calc(100% - 10px), calc(100% - 10px) calc(100% - 10px), calc(100% - 10px) 84.14px, calc(100% - 80px - 4.14px) 10px, 10px 10px);
+}
+.character__info .card__wraper .card__info--left__status {
+  background-color: #e10a00;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 25vh;
+  clip-path: polygon(0 80px, 80px 0, calc(100% - 80px) 0, 100% 80px, 100% calc(100% - 80px), calc(100% - 80px) 100%, 80px 100%, 0 calc(100% - 80px));
+  position: relative;
+}
+.character__info .card__wraper .card__info--left__status p {
+  font-size: 3rem;
+}
+.character__info .card__wraper .card__info--left__status::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #f38b14;
+  clip-path: polygon(0 80px, 80px 0, calc(100% - 80px) 0, 100% 80px, 100% calc(100% - 80px), calc(100% - 80px) 100%, 80px 100%, 0 calc(100% - 80px), 0 80px, 10px 84.14px, 10px calc(100% - 80px - 4.14px), 84.14px calc(100% - 10px), calc(100% - 80px - 4.14px) calc(100% - 10px), calc(100% - 10px) calc(100% - 80px - 4.14px), calc(100% - 10px) 84.14px, calc(100% - 80px - 4.14px) 10px, 84.14px 10px, 10px 84.14px);
+}
+.character__info .card__wraper .card__info--img {
+  grid-area: 1/2/4/2;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 }
-.character__info article .card__info--img {
-  grid-area: 1/2/3/2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-}
-.character__info article .card__info--img img {
+.character__info .card__wraper .card__info--img img {
+  border: 10px solid #f38b14;
   object-fit: cover;
   border-radius: 15px;
 }
-.character__info article .card__info--right {
-  grid-area: 1/3/3/3;
+.character__info .card__wraper .card__info--right__name {
+  grid-area: 1/3/1/3;
+  margin: 1rem;
+  height: fit-content;
+  padding: 3rem;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: #e10a00;
+  align-items: center;
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - 80px) 0, 100% 80px, 100% 100%, 80px 100%, 0 calc(100% - 80px));
+  z-index: 0;
+}
+.character__info .card__wraper .card__info--right__name::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #f38b14;
+  clip-path: polygon(0 0, calc(100% - 80px) 0, 100% 80px, 100% 100%, 80px 100%, 0 calc(100% - 80px), 0 0, 10px 10px, 10px calc(100% - 80px - 4.14px), 84.14px calc(100% - 10px), calc(100% - 10px) calc(100% - 10px), calc(100% - 10px) 84.14px, calc(100% - 80px - 4.14px) 10px, 10px 10px);
+}
+.character__info .card__wraper .card__info--right__vitals {
+  grid-area: 2/3/2/3;
+  margin: 1rem;
+  padding: 1rem;
+  height: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: #e10a00;
+  align-items: center;
+  position: relative;
+  clip-path: polygon(0 80px, 80px 0, 100% 0, 100% calc(100% - 80px), calc(100% - 80px) 100%, 0 100%);
+}
+.character__info .card__wraper .card__info--right__vitals::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #f38b14;
+  clip-path: polygon(0 80px, 80px 0, 100% 0, 100% calc(100% - 80px), calc(100% - 80px) 100%, 0 100%, 0 80px, 10px 84.14px, 10px calc(100% - 10px), calc(100% - 80px - 4.14px) calc(100% - 10px), calc(100% - 10px) calc(100% - 80px - 4.14px), calc(100% - 10px) 10px, 84.14px 10px, 10px 84.14px);
+}
+.character__info .card__wraper .card__info--right__location {
+  grid-area: 3/3/4/3;
+  margin: 0.5rem;
+  height: fit-content;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: #e10a00;
+  align-items: center;
+  position: relative;
+  clip-path: polygon(0 80px, 80px 0, 100% 0, 100% calc(100% - 80px), calc(100% - 80px) 100%, 0 100%);
+}
+.character__info .card__wraper .card__info--right__location::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #f38b14;
+  clip-path: polygon(0 80px, 80px 0, 100% 0, 100% calc(100% - 80px), calc(100% - 80px) 100%, 0 100%, 0 80px, 10px 84.14px, 10px calc(100% - 10px), calc(100% - 80px - 4.14px) calc(100% - 10px), calc(100% - 10px) calc(100% - 80px - 4.14px), calc(100% - 10px) 10px, 84.14px 10px, 10px 84.14px);
 }
 
 .buttons {
@@ -137,6 +254,7 @@ nav h1 {
   align-items: center;
   gap: 0.5rem;
   margin: 1rem auto;
+  margin-top: 3rem;
 }
 .buttons .nav__buttons {
   user-select: none;
