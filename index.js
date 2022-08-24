@@ -9,11 +9,12 @@ const lastPage = document.querySelector('#last__page')
 const botones = document.querySelector('.buttons')
 const contenedorStatus = document.querySelector('.card__info--left__status')
 const estado = document.querySelector('#status')
+const dropdownButton = document.querySelector('.dropdown__button')
+const dropdown = document.querySelector('.dropdown')
+const optionsDropdown = document.querySelector('.options__wraper')
 
-let pagina = 1
-
-const paginaActual = () =>{
-    currentPage.innerHTML = `${pagina}`
+const paginaActual = (pagina) =>{
+    currentPage.innerHTML = pagina
 }
 
 const resultadoAPI = () =>{
@@ -21,6 +22,29 @@ const resultadoAPI = () =>{
     .then(respuesta => respuesta.json())
     .then(data => {
         contenedor.innerHTML = subirAHTML(data.results)
+        console.log(data)
+        let pagina = 1
+        nextPage.addEventListener('click', () =>{
+            console.log(data.info.next)
+            let siguie = data.info.next
+            if(siguie === null){
+                desactivarSiguiente()
+                desactivarUltimaPagina()
+            }else if(siguie !== null){
+                const redefinir = async() =>{
+                    respuesta = await fetch(data.info.next)
+                    data = await respuesta.json()
+                    contenedor.innerHTML = subirAHTML(data.results)
+                }
+                redefinir()
+                pagina += 1
+                paginaActual(pagina)
+                activarAtras()
+                activarPrimeraPagina()
+                window.scrollTo({top: 0, behavior: 'smooth'})
+            }
+        })
+        paginaActual(pagina)
         agregarEventoPersonajes()
         personaje.innerHTML = personajeInformacionAHTML(data.results)
         activarSiguientesDesactivarPrevios()
@@ -29,6 +53,7 @@ const resultadoAPI = () =>{
     .catch( () => {console.log('salio mal')})
 }
 
+window.scrollTo({top: 0, behavior: 'smooth'})
 paginaActual()
 resultadoAPI()
 
@@ -202,19 +227,6 @@ const vivoOMuerto = () =>{
     cargaron
 }
 
-nextPage.addEventListener('click', () =>{
-    if(pagina === 42){
-        desactivarSiguiente()
-        desactivarUltimaPagina()
-    }else if(pagina !== 42){
-        pagina += 1
-        activarPrimeraPagina()
-        activarAtras()
-        activarSiguiente()
-        moverPagina()
-    }
-})
-
 previousPage.addEventListener('click', () =>{
     if(pagina === 1){
         desactivarAtras()
@@ -263,4 +275,53 @@ const moverPagina = async() =>{
     paginaActual()
     agregarEventoPersonajes()
     window.scrollTo({top: 0, behavior: 'smooth'})
+}
+
+dropdownButton.addEventListener('click', () =>{
+    dropdown.classList.toggle('visible')
+    agregarEventoDropdown()
+})
+
+const opcion = async(estado) =>{
+    let respuesta = await fetch(`https://rickandmortyapi.com/api/character/?status=${estado}`)
+    let data = await respuesta.json()
+    contenedor.innerHTML = subirAHTML(data.results)
+    console.log(data)
+    let pagina = 1
+    nextPage.addEventListener('click', () =>{
+        console.log(data.info.next)
+        let siguiente = data.info.next
+        if(siguiente === null){
+            desactivarSiguiente()
+            desactivarUltimaPagina()
+        }else if(siguiente !== null){
+            const redefinir = async() =>{
+                respuesta = await fetch(data.info.next)
+                data = await respuesta.json()
+                contenedor.innerHTML = subirAHTML(data.results)
+            }
+            redefinir()
+            pagina += 1
+            paginaActual(pagina)
+            window.scrollTo({top: 0, behavior: 'smooth'})
+        }
+    })
+    paginaActual(pagina)
+    agregarEventoPersonajes()
+}
+
+const agregarEventoDropdown = () =>{
+    const opciones = document.querySelectorAll('.option')
+    for(let i = 0; i < opciones.length; i++){
+        opciones[i].addEventListener('click', () =>{
+            let id = opciones[i].id
+            if(id === 'aliveOption'){
+                opcion('alive')
+            }else if(id === 'deadOption'){
+                opcion('dead')
+            }else if(id === 'unknownOption'){
+                opcion('unknown')
+            }
+        })
+    }
 }

@@ -17,6 +17,27 @@ nav h1 {
   width: fit-content;
   cursor: pointer;
 }
+nav .dropdown__wraper {
+  display: flex;
+  flex-direction: column;
+}
+nav .dropdown__wraper .dropdown__button {
+  width: fit-content;
+}
+nav .dropdown__wraper .dropdown {
+  display: none;
+}
+nav .dropdown__wraper .dropdown ul li p {
+  cursor: pointer;
+  width: fit-content;
+  transition: all 0.25s;
+}
+nav .dropdown__wraper .dropdown ul li p:hover {
+  color: red;
+}
+nav .dropdown__wraper .visible {
+  display: flex;
+}
 
 .character__wraper {
   display: grid;

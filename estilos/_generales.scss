@@ -17,6 +17,31 @@ nav{
         width: fit-content;
         cursor: pointer;
     }
+    .dropdown__wraper{
+        display: flex;
+        flex-direction: column;
+        .dropdown__button{
+            width: fit-content;
+        }
+        .dropdown{
+            display: none;
+            ul{
+                li{
+                    p{
+                        cursor: pointer;
+                        width: fit-content;
+                        transition: all .25s;
+                        &:hover{
+                            color: red;
+                        }
+                    }
+                }
+            }
+        }
+        .visible{
+            display: flex;
+        }
+    }
 }
 .character__wraper{
     display: grid;
