@@ -1,11 +1,11 @@
 const home = document.querySelector('h1')
+const defaultPage = document.querySelector('#default')
 const contenedor = document.querySelector('.character__wraper')
 const personaje = document.querySelector('.character__info')
-const firstPage = document.querySelector('#first__page')
+const actualPage = document.querySelector('.characters__page')
 const previousPage = document.querySelector('#previous__page')
 const currentPage = document.querySelector('#current__page')
 const nextPage = document.querySelector('#next__page')
-const lastPage = document.querySelector('#last__page')
 const botones = document.querySelector('.buttons')
 const contenedorStatus = document.querySelector('.card__info--left__status')
 const estado = document.querySelector('#status')
@@ -21,15 +21,13 @@ const resultadoAPI = () =>{
     fetch("https://rickandmortyapi.com/api/character")
     .then(respuesta => respuesta.json())
     .then(data => {
-        contenedor.innerHTML = subirAHTML(data.results)
         console.log(data)
+        contenedor.innerHTML = subirAHTML(data.results)
         let pagina = 1
         nextPage.addEventListener('click', () =>{
-            console.log(data.info.next)
             let siguie = data.info.next
             if(siguie === null){
                 desactivarSiguiente()
-                desactivarUltimaPagina()
             }else if(siguie !== null){
                 const redefinir = async() =>{
                     respuesta = await fetch(data.info.next)
@@ -44,15 +42,34 @@ const resultadoAPI = () =>{
                 window.scrollTo({top: 0, behavior: 'smooth'})
             }
         })
+        previousPage.addEventListener('click', () =>{
+            if(data.info.prev === null){
+                desactivarAtras()
+            }else if(data.info.prev !== null){
+                const previa = async() =>{
+                    respuesta = await fetch(data.info.prev)
+                    data = await respuesta.json()
+                    contenedor.innerHTML = subirAHTML(data.results)
+                }
+                window.scrollTo({top: 0, behavior: 'smooth'})
+                previa()
+                pagina -= 1
+                paginaActual(pagina)
+            }
+        })
         paginaActual(pagina)
         agregarEventoPersonajes()
         personaje.innerHTML = personajeInformacionAHTML(data.results)
         activarSiguientesDesactivarPrevios()
-        paginaActual()
     })
     .catch( () => {console.log('salio mal')})
 }
 
+defaultPage.addEventListener('click', () =>{
+    window.location.reload()
+})
+actualPage.innerHTML = 'Characters'
+actualPage.style.color = '#ece8e7'
 window.scrollTo({top: 0, behavior: 'smooth'})
 paginaActual()
 resultadoAPI()
@@ -69,7 +86,7 @@ const subirAHTML = (array) =>{
                     <p>${curr.status} - ${curr.species} - ${curr.gender}</p>
                 </div>
                 <div class='personaje__info--abajo'>
-                    <p>Origin Location: 
+                    <p>Origin Location: </p>
                     <p>${curr.origin.name}</p>
                     <p>Last know location: </p>
                     <p>${curr.location.name}</p>
@@ -172,30 +189,6 @@ const activarSiguiente = () =>{
     nextPage.style.color = '#fff'
 }
 
-const desactivarPrimeraPagina = () =>{
-    firstPage.disabled = true
-    firstPage.style.cursor = 'not-allowed'
-    firstPage.style.color = '#303030'
-}
-
-const activarPrimeraPagina = () =>{
-    firstPage.disabled = false 
-    firstPage.style.cursor = 'pointer'
-    firstPage.style.color = '#fff'
-}
-
-const desactivarUltimaPagina = () =>{
-    lastPage.disabled = true
-    lastPage.style.cursor = 'not-allowed'
-    lastPage.style.color = '#303030'
-}
-
-const activarUltimaPagina = () =>{
-    lastPage.disabled = false
-    lastPage.style.cursor = 'pointer'
-    lastPage.style.color = '#fff'
-}
-
 const activarPrevioDesactivarSiguientes = () =>{
     activarAtras()
     activarPrimeraPagina()
@@ -227,47 +220,6 @@ const vivoOMuerto = () =>{
     cargaron
 }
 
-previousPage.addEventListener('click', () =>{
-    if(pagina === 1){
-        desactivarAtras()
-        desactivarPrimeraPagina()
-    }else if(pagina !== 1){
-        activarAtras()
-        activarSiguiente()
-        activarUltimaPagina()
-        pagina -= 1
-        moverPagina()
-    }
-})
-
-firstPage.addEventListener('click', () =>{
-    const primeraPagina = async() =>{
-        const respuesta = await fetch(`https://rickandmortyapi.com/api/character/?page=1`)
-        const data = await respuesta.json()
-        contenedor.innerHTML = subirAHTML(data.results)
-        agregarEventoPersonajes()
-        window.scrollTo({top: 0, behavior: 'smooth'})
-    }
-    primeraPagina()
-    activarSiguientesDesactivarPrevios()
-    pagina = 1
-    paginaActual()
-})
-
-lastPage.addEventListener('click', () =>{
-    const ultimaPagina = async() =>{
-        const respuesta = await fetch(`https://rickandmortyapi.com/api/character/?page=42`)
-        const data = await respuesta.json()
-        contenedor.innerHTML = subirAHTML(data.results)
-        agregarEventoPersonajes()
-        document.scrollTo({top: 0, behavior: 'smooth'})
-    }
-    ultimaPagina()
-    activarPrevioDesactivarSiguientes()
-    pagina = 42
-    paginaActual()
-})
-
 const moverPagina = async() =>{
     const respuesta = await fetch(`https://rickandmortyapi.com/api/character/?page=${pagina}`)
     const data = await respuesta.json()
@@ -283,30 +235,41 @@ dropdownButton.addEventListener('click', () =>{
 })
 
 const opcion = async(estado) =>{
-    let respuesta = await fetch(`https://rickandmortyapi.com/api/character/?status=${estado}`)
+    let respuesta = await fetch(`https://rickandmortyapi.com/api/character/?page=1&status=${estado}`)
     let data = await respuesta.json()
     contenedor.innerHTML = subirAHTML(data.results)
-    console.log(data)
     let pagina = 1
+    console.log(data)
     nextPage.addEventListener('click', () =>{
-        console.log(data.info.next)
-        let siguiente = data.info.next
-        if(siguiente === null){
+        if(data.info.next === null){
             desactivarSiguiente()
-            desactivarUltimaPagina()
-        }else if(siguiente !== null){
-            const redefinir = async() =>{
+        }else if(data.info.next !== null){
+            const sig = async() =>{
                 respuesta = await fetch(data.info.next)
                 data = await respuesta.json()
                 contenedor.innerHTML = subirAHTML(data.results)
             }
-            redefinir()
+            window.scrollTo({top: 0, behavior: 'smooth'})
+            sig()
             pagina += 1
             paginaActual(pagina)
-            window.scrollTo({top: 0, behavior: 'smooth'})
         }
     })
-    paginaActual(pagina)
+    previousPage.addEventListener('click', () =>{
+        if(data.info.prev === null){
+            desactivarAtras()
+        }else if(data.info.next !== null){
+            const previa = async() =>{
+                respuesta = await fetch(data.info.prev)
+                data = await respuesta.json()
+                contenedor.innerHTML = subirAHTML(data.results)
+            }
+            window.scrollTo({top: 0, behavior: 'smooth'})
+            previa()
+            pagina -= 1
+            paginaActual(pagina)
+        }
+    })
     agregarEventoPersonajes()
 }
 
@@ -317,10 +280,16 @@ const agregarEventoDropdown = () =>{
             let id = opciones[i].id
             if(id === 'aliveOption'){
                 opcion('alive')
+                actualPage.innerHTML = 'Characters Alive'
+                dropdown.classList.remove('visible')
             }else if(id === 'deadOption'){
                 opcion('dead')
+                actualPage.innerHTML = 'Characters Dead'
+                dropdown.classList.remove('visible')
             }else if(id === 'unknownOption'){
                 opcion('unknown')
+                actualPage.innerHTML = 'Characters Unknown'
+                dropdown.classList.remove('visible')
             }
         })
     }
