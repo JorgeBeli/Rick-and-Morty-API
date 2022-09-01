@@ -24,14 +24,14 @@ nav{
         margin-left: 2rem;
         transition: all .25s;
         &:hover{
-            color: red;
+            color: #f00;
         }
     }
     p {
         cursor: pointer;
         transition: all .25s;
         &:hover{
-            color: red;
+            color: #f00;
         }
     }
     .dropdown__wraper{
@@ -52,7 +52,7 @@ nav{
             border-top-left-radius: 15px;
             border-top-right-radius: 15px;
             &:hover{
-                color: red;
+                color: #f00;
             }
         }
         .dropdown{
@@ -74,7 +74,7 @@ nav{
                         font-size: .9rem;
                         text-align: center;
                         &:hover{
-                            color: red;
+                            color: #f00;
                         }
                     }
                 }
@@ -87,6 +87,17 @@ nav{
             display: none;
         }
     }
+    .theme__wraper{
+        margin-right: 1rem;
+        .theme__changer{
+            width: 1.5rem;
+            height: 1.5rem;
+            content: '';
+            background-color: #6d6d6d;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    }
 }
 .characters__page{
     margin: 2rem auto;
@@ -97,6 +108,7 @@ nav{
     gap: 1.5rem;
     align-items: center;
     justify-content: center;
+    color: #ece8e7;
     &::before, &::after{
         display: block;
         content: "";
@@ -169,6 +181,11 @@ nav{
                 color: #6d6d6d;
                 margin-top: .35rem;
             }
+        }
+    }
+    .lightThemePersonaje{
+        :nth-child(1), :nth-child(2), :nth-child(3){
+            background-color: #9ED2C6;
         }
     }
 }

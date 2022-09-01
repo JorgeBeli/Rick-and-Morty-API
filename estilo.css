@@ -27,14 +27,14 @@ nav h1 {
   transition: all 0.25s;
 }
 nav h1:hover {
-  color: red;
+  color: #f00;
 }
 nav p {
   cursor: pointer;
   transition: all 0.25s;
 }
 nav p:hover {
-  color: red;
+  color: #f00;
 }
 nav .dropdown__wraper {
   display: flex;
@@ -56,7 +56,7 @@ nav .dropdown__wraper .dropdown__button {
   border-top-right-radius: 15px;
 }
 nav .dropdown__wraper .dropdown__button:hover {
-  color: red;
+  color: #f00;
 }
 nav .dropdown__wraper .dropdown {
   background-color: #505050;
@@ -79,13 +79,24 @@ nav .dropdown__wraper .dropdown ul li p {
   text-align: center;
 }
 nav .dropdown__wraper .dropdown ul li p:hover {
-  color: red;
+  color: #f00;
 }
 nav .dropdown__wraper .visible {
   display: flex;
 }
 nav .dropdown__wraper .invisible {
   display: none;
+}
+nav .theme__wraper {
+  margin-right: 1rem;
+}
+nav .theme__wraper .theme__changer {
+  width: 1.5rem;
+  height: 1.5rem;
+  content: "";
+  background-color: #6d6d6d;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .characters__page {
@@ -97,6 +108,7 @@ nav .dropdown__wraper .invisible {
   gap: 1.5rem;
   align-items: center;
   justify-content: center;
+  color: #ece8e7;
 }
 .characters__page::before, .characters__page::after {
   display: block;
@@ -172,6 +184,9 @@ nav .dropdown__wraper .invisible {
 .character__wraper .personaje .personaje__info--abajo :nth-child(odd) {
   color: #6d6d6d;
   margin-top: 0.35rem;
+}
+.character__wraper .lightThemePersonaje :nth-child(1), .character__wraper .lightThemePersonaje :nth-child(2), .character__wraper .lightThemePersonaje :nth-child(3) {
+  background-color: #9ED2C6;
 }
 
 .character__info {

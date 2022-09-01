@@ -1,4 +1,5 @@
 const home = document.querySelector('h1')
+const body = document.querySelector('body')
 const defaultPage = document.querySelector('#default')
 const contenedor = document.querySelector('.character__wraper')
 const personaje = document.querySelector('.character__info')
@@ -12,6 +13,65 @@ const estado = document.querySelector('#status')
 const dropdownButton = document.querySelector('.dropdown__button')
 const dropdown = document.querySelector('.dropdown')
 const optionsDropdown = document.querySelector('.options__wraper')
+const lightThemeCheckbox = document.querySelector('#lightThemeCheckbox')
+
+const checkLightTheme = () =>{
+    if(getLocalStorage('lightTheme') === true){
+        cardLightMode()
+    }else if(getLocalStorage('lightTheme') !== true){
+        cardDefault()
+    }
+}
+
+const cardLightMode = () =>{
+    const card = document.getElementsByClassName('personaje')
+    for(element of card){
+        element.classList.add('lightThemePersonaje')
+    }
+}
+
+const cardDefault = () =>{
+    const card = document.getElementsByClassName('personaje')
+    for(element of card){
+        element.classList.remove('lightThemePersonaje')
+    }
+}
+
+const activeLightMode = () =>{
+    cardLightMode()
+    body.style.backgroundColor = '#F7ECDE'
+    actualPage.style.color = '#505050'
+}
+
+const desactiveLightMode = () =>{
+    cardDefault()
+    body.style.backgroundColor = '#202020'
+    actualPage.style.color = '#ece8e7'
+}
+
+const lightTheme = () =>{
+    document.addEventListener('DOMContentLoaded', () =>{
+        lightThemeCheckbox.addEventListener('click', () =>{
+            setLocalStorage('lightTheme', lightThemeCheckbox.checked)
+            if(lightThemeCheckbox.checked === true){
+                activeLightMode()
+            }else if(lightThemeCheckbox.checked !== true){
+                desactiveLightMode()
+            }
+        })
+    })
+}
+
+const setLocalStorage = (key, value) =>{
+    const json = JSON.stringify(value)
+    const setJSON = localStorage.setItem(key,json)
+}
+
+const getLocalStorage = (key) =>{
+    const data = localStorage.getItem(key)
+    const parseData = JSON.parse(data)
+    return parseData
+}
 
 const paginaActual = (pagina) =>{
     currentPage.innerHTML = pagina
@@ -21,7 +81,6 @@ const resultadoAPI = () =>{
     fetch("https://rickandmortyapi.com/api/character")
     .then(respuesta => respuesta.json())
     .then(data => {
-        console.log(data)
         contenedor.innerHTML = subirAHTML(data.results)
         let pagina = 1
         nextPage.addEventListener('click', () =>{
@@ -38,29 +97,32 @@ const resultadoAPI = () =>{
                 pagina += 1
                 paginaActual(pagina)
                 activarAtras()
-                activarPrimeraPagina()
                 window.scrollTo({top: 0, behavior: 'smooth'})
+                setTimeout(checkLightTheme, 1)
             }
         })
         previousPage.addEventListener('click', () =>{
             if(data.info.prev === null){
                 desactivarAtras()
             }else if(data.info.prev !== null){
+                setTimeout(checkLightTheme, 1)
                 const previa = async() =>{
                     respuesta = await fetch(data.info.prev)
                     data = await respuesta.json()
                     contenedor.innerHTML = subirAHTML(data.results)
                 }
-                window.scrollTo({top: 0, behavior: 'smooth'})
                 previa()
                 pagina -= 1
                 paginaActual(pagina)
+                window.scrollTo({top: 0, behavior: 'smooth'})
+                setTimeout(checkLightTheme, 1)
             }
         })
         paginaActual(pagina)
         agregarEventoPersonajes()
         personaje.innerHTML = personajeInformacionAHTML(data.results)
         activarSiguientesDesactivarPrevios()
+        setTimeout(checkLightTheme, 1)
     })
     .catch( () => {console.log('salio mal')})
 }
@@ -69,11 +131,10 @@ defaultPage.addEventListener('click', () =>{
     window.location.reload()
 })
 actualPage.innerHTML = 'Characters'
-actualPage.style.color = '#ece8e7'
 window.scrollTo({top: 0, behavior: 'smooth'})
 paginaActual()
 resultadoAPI()
-
+setTimeout(checkLightTheme, 1)
 const subirAHTML = (array) =>{
     const datos = array.reduce((acc,curr)=>{
         return acc + `
@@ -98,6 +159,7 @@ const subirAHTML = (array) =>{
 }
 
 const personajeInformacionAHTML = (data) =>{
+    setTimeout(checkLightTheme, 1)
     return `
         <article class='card__wraper'>
             <div class='card__info--left__last__location'>
@@ -191,16 +253,12 @@ const activarSiguiente = () =>{
 
 const activarPrevioDesactivarSiguientes = () =>{
     activarAtras()
-    activarPrimeraPagina()
     desactivarSiguiente()
-    desactivarUltimaPagina()
 }
 
 const activarSiguientesDesactivarPrevios = () =>{
     desactivarAtras()
-    desactivarPrimeraPagina()
     activarSiguiente()
-    activarUltimaPagina()
 }
 
 const vivoOMuerto = () =>{
@@ -220,14 +278,6 @@ const vivoOMuerto = () =>{
     cargaron
 }
 
-const moverPagina = async() =>{
-    const respuesta = await fetch(`https://rickandmortyapi.com/api/character/?page=${pagina}`)
-    const data = await respuesta.json()
-    contenedor.innerHTML = subirAHTML(data.results)
-    paginaActual()
-    agregarEventoPersonajes()
-    window.scrollTo({top: 0, behavior: 'smooth'})
-}
 
 dropdownButton.addEventListener('click', () =>{
     dropdown.classList.toggle('visible')
@@ -239,8 +289,9 @@ const opcion = async(estado) =>{
     let data = await respuesta.json()
     contenedor.innerHTML = subirAHTML(data.results)
     let pagina = 1
-    console.log(data)
+    setTimeout(checkLightTheme, 1)
     nextPage.addEventListener('click', () =>{
+        setTimeout(checkLightTheme, 1)
         if(data.info.next === null){
             desactivarSiguiente()
         }else if(data.info.next !== null){
@@ -249,16 +300,19 @@ const opcion = async(estado) =>{
                 data = await respuesta.json()
                 contenedor.innerHTML = subirAHTML(data.results)
             }
-            window.scrollTo({top: 0, behavior: 'smooth'})
             sig()
             pagina += 1
             paginaActual(pagina)
+            window.scrollTo({top: 0, behavior: 'smooth'})
+            setTimeout(checkLightTheme, 1)
         }
     })
     previousPage.addEventListener('click', () =>{
+        setTimeout(checkLightTheme, 1)
         if(data.info.prev === null){
             desactivarAtras()
         }else if(data.info.next !== null){
+            setTimeout(checkLightTheme, 1)
             const previa = async() =>{
                 respuesta = await fetch(data.info.prev)
                 data = await respuesta.json()
@@ -271,6 +325,7 @@ const opcion = async(estado) =>{
         }
     })
     agregarEventoPersonajes()
+    paginaActual(pagina)
 }
 
 const agregarEventoDropdown = () =>{
@@ -282,15 +337,20 @@ const agregarEventoDropdown = () =>{
                 opcion('alive')
                 actualPage.innerHTML = 'Characters Alive'
                 dropdown.classList.remove('visible')
+                setTimeout(checkLightTheme, 1)
             }else if(id === 'deadOption'){
                 opcion('dead')
                 actualPage.innerHTML = 'Characters Dead'
                 dropdown.classList.remove('visible')
+                setTimeout(checkLightTheme, 1)
             }else if(id === 'unknownOption'){
                 opcion('unknown')
                 actualPage.innerHTML = 'Characters Unknown'
                 dropdown.classList.remove('visible')
+                setTimeout(checkLightTheme, 1)
             }
         })
     }
 }
+
+lightTheme()
