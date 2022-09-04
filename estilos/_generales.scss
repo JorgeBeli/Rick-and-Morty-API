@@ -387,4 +387,10 @@ nav{
         display: grid;
         place-content: center;
     }
+    #next__page__status{
+        display: none;
+    }
+    #previous__page__status{
+        display: none;
+    }
 }

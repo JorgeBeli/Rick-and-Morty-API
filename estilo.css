@@ -387,5 +387,11 @@ nav .theme__wraper .theme__changer {
   display: grid;
   place-content: center;
 }
+.buttons #next__page__status {
+  display: none;
+}
+.buttons #previous__page__status {
+  display: none;
+}
 
 /*# sourceMappingURL=estilo.css.map */

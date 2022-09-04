@@ -5,8 +5,10 @@ const contenedor = document.querySelector('.character__wraper')
 const personaje = document.querySelector('.character__info')
 const actualPage = document.querySelector('.characters__page')
 const previousPage = document.querySelector('#previous__page')
+const previousPageStatus = document.querySelector('#previous__page__status')
 const currentPage = document.querySelector('#current__page')
 const nextPage = document.querySelector('#next__page')
+const nextPageStatus = document.querySelector('#next__page__status')
 const botones = document.querySelector('.buttons')
 const contenedorStatus = document.querySelector('.card__info--left__status')
 const estado = document.querySelector('#status')
@@ -77,64 +79,128 @@ const paginaActual = (pagina) =>{
     currentPage.innerHTML = pagina
 }
 
-const resultadoAPI = () =>{
-    fetch("https://rickandmortyapi.com/api/character")
-    .then(respuesta => respuesta.json())
-    .then(data => {
-        contenedor.innerHTML = subirAHTML(data.results)
-        let pagina = 1
-        nextPage.addEventListener('click', () =>{
-            let siguie = data.info.next
-            if(siguie === null){
-                desactivarSiguiente()
-            }else if(siguie !== null){
-                const redefinir = async() =>{
+let stat = ''
+const checkStat = () =>{
+    if(stat.length === 0){
+        fetch('https://rickandmortyapi.com/api/character/')
+        .then(respuesta => respuesta.json())
+        .then(data => {
+            contenedor.innerHTML = subirAHTML(data.results)
+            agregarEventoDropdown()
+            nextPage.addEventListener('click', async() =>{
+                if(data.info.next === null){
+                    nextPage.disabled = true
+                    nextPage.style.cursor = 'not-allowed'
+                    nextPage.style.color = '#303030'
+                }else if(data.info.next !== null){
                     respuesta = await fetch(data.info.next)
                     data = await respuesta.json()
                     contenedor.innerHTML = subirAHTML(data.results)
+                    agregarEventoDropdown()
+                    previousPage.disabled = false
+                    previousPage.style.cursor = 'pointer'
+                    previousPage.style.color = '#fff'
                 }
-                redefinir()
-                pagina += 1
-                paginaActual(pagina)
-                activarAtras()
-                window.scrollTo({top: 0, behavior: 'smooth'})
-                setTimeout(checkLightTheme, 1)
-            }
-        })
-        previousPage.addEventListener('click', () =>{
-            if(data.info.prev === null){
-                desactivarAtras()
-            }else if(data.info.prev !== null){
-                setTimeout(checkLightTheme, 1)
-                const previa = async() =>{
+            })
+            previousPage.addEventListener('click', async() =>{
+                if(data.info.prev === null){
+                    previousPage.disabled = true
+                    previousPage.style.cursor = 'not-allowed'
+                    previousPage.style.color = '#303030'
+                }else if(data.info.next !== null){
                     respuesta = await fetch(data.info.prev)
                     data = await respuesta.json()
                     contenedor.innerHTML = subirAHTML(data.results)
+                    agregarEventoDropdown()
+                    nextPage.disabled = false
+                    nextPage.style.cursor = 'pointer'
+                    nextPage.style.color = '#fff'
                 }
-                previa()
-                pagina -= 1
-                paginaActual(pagina)
-                window.scrollTo({top: 0, behavior: 'smooth'})
+            })
+        })
+        .catch( () => console.log('error'))
+    }else if(stat.length > 0){
+        fetch(`https://rickandmortyapi.com/api/character/?status=${stat}`)
+        .then(respuesta => respuesta.json())
+        .then(data => {
+            contenedor.innerHTML = subirAHTML(data.results)
+            agregarEventoDropdown()
+            nextPage.style.display = 'none'
+            previousPage.style.display = 'none'
+            nextPageStatus.style.display = 'flex'
+            previousPageStatus.style.display = 'flex'
+            nextPageStatus.addEventListener('click', async() =>{
+                if(data.info.next === null){
+                    nextPageStatus.disabled = true
+                    nextPageStatus.style.cursor = 'not-allowed'
+                    nextPageStatus.style.color = '#303030'
+                }else if(data.info.next !== null){
+                    respuesta = await fetch(data.info.next)
+                    data = await respuesta.json()
+                    contenedor.innerHTML = subirAHTML(data.results)
+                    agregarEventoDropdown()
+                    previousPageStatus.disabled = false
+                    previousPageStatus.style.cursor = 'pointer'
+                    previousPageStatus.style.color = '#fff'
+                }
+            })
+            previousPageStatus.addEventListener('click', async() =>{
+                if(data.info.prev === null){
+                    previousPageStatus.disabled = true
+                    previousPageStatus.style.cursor = 'not-allowed'
+                    previousPageStatus.style.color = '#303030'
+                }else if(data.info.prev !== null){
+                    respuesta = await fetch(data.info.prev)
+                    data = await respuesta.json()
+                    contenedor.innerHTML = subirAHTML(data.results)
+                    agregarEventoDropdown()
+                    nextPageStatus.disabled = false
+                    nextPageStatus.style.cursor = 'pointer'
+                    nextPageStatus.style.color = '#fff'
+                }
+            })
+        })
+        .catch( () => console.log('error'))
+    }
+}
+checkStat()
+const agregarEventoDropdown = () =>{
+    const opciones = document.querySelectorAll('.option')
+    for(let i = 0; i < opciones.length; i++){
+        opciones[i].addEventListener('click', () =>{
+            let id = opciones[i].id
+            if(id === 'aliveOption'){
+                stat = 'alive'
+                checkStat()
+                actualPage.innerHTML = 'Characters Alive'
+                dropdown.classList.remove('visible')
+                setTimeout(checkLightTheme, 1)
+            }else if(id === 'deadOption'){
+                stat = 'dead'
+                checkStat()
+                actualPage.innerHTML = 'Characters Dead'
+                dropdown.classList.remove('visible')
+                setTimeout(checkLightTheme, 1)
+            }else if(id === 'unknownOption'){
+                stat = 'unknown'
+                checkStat()
+                actualPage.innerHTML = 'Characters Unknown'
+                dropdown.classList.remove('visible')
                 setTimeout(checkLightTheme, 1)
             }
         })
-        paginaActual(pagina)
-        agregarEventoPersonajes()
-        personaje.innerHTML = personajeInformacionAHTML(data.results)
-        activarSiguientesDesactivarPrevios()
-        setTimeout(checkLightTheme, 1)
-    })
-    .catch( () => {console.log('salio mal')})
+    }
 }
 
 defaultPage.addEventListener('click', () =>{
     window.location.reload()
 })
+
 actualPage.innerHTML = 'Characters'
 window.scrollTo({top: 0, behavior: 'smooth'})
 paginaActual()
-resultadoAPI()
 setTimeout(checkLightTheme, 1)
+
 const subirAHTML = (array) =>{
     const datos = array.reduce((acc,curr)=>{
         return acc + `
@@ -227,46 +293,10 @@ const enfocarPersonaje = () => {
     vivoOMuerto()
 }
 
-const desactivarAtras = () =>{
-    previousPage.disabled = true
-    previousPage.style.cursor = 'not-allowed'
-    previousPage.style.color = '#303030'
-}
-
-const activarAtras = () =>{
-    previousPage.disabled = false
-    previousPage.style.cursor = 'pointer'
-    previousPage.style.color = '#fff'
-}
-
-const desactivarSiguiente = () =>{
-    nextPage.disabled = true
-    nextPage.style.cursor = 'not-allowed'
-    nextPage.style.color = '#303030'
-}
-
-const activarSiguiente = () =>{
-    nextPage.disabled = false
-    nextPage.style.cursor = 'pointer'
-    nextPage.style.color = '#fff'
-}
-
-const activarPrevioDesactivarSiguientes = () =>{
-    activarAtras()
-    desactivarSiguiente()
-}
-
-const activarSiguientesDesactivarPrevios = () =>{
-    desactivarAtras()
-    activarSiguiente()
-}
-
 const vivoOMuerto = () =>{
     const cargaron = setTimeout(()=>{
         const contenedorStatus = document.querySelector('.card__info--left__status')
         const estado = document.querySelector('#status')
-        console.log(contenedorStatus)
-        console.log(estado)
         if(estado.innerHTML === 'Alive'){
             contenedorStatus.style.background = '#88ff00'
         }else if(estado.innerHTML === 'Dead'){
@@ -278,79 +308,8 @@ const vivoOMuerto = () =>{
     cargaron
 }
 
-
 dropdownButton.addEventListener('click', () =>{
     dropdown.classList.toggle('visible')
-    agregarEventoDropdown()
 })
-
-const opcion = async(estado) =>{
-    let respuesta = await fetch(`https://rickandmortyapi.com/api/character/?page=1&status=${estado}`)
-    let data = await respuesta.json()
-    contenedor.innerHTML = subirAHTML(data.results)
-    let pagina = 1
-    setTimeout(checkLightTheme, 1)
-    nextPage.addEventListener('click', () =>{
-        setTimeout(checkLightTheme, 1)
-        if(data.info.next === null){
-            desactivarSiguiente()
-        }else if(data.info.next !== null){
-            const sig = async() =>{
-                respuesta = await fetch(data.info.next)
-                data = await respuesta.json()
-                contenedor.innerHTML = subirAHTML(data.results)
-            }
-            sig()
-            pagina += 1
-            paginaActual(pagina)
-            window.scrollTo({top: 0, behavior: 'smooth'})
-            setTimeout(checkLightTheme, 1)
-        }
-    })
-    previousPage.addEventListener('click', () =>{
-        setTimeout(checkLightTheme, 1)
-        if(data.info.prev === null){
-            desactivarAtras()
-        }else if(data.info.next !== null){
-            setTimeout(checkLightTheme, 1)
-            const previa = async() =>{
-                respuesta = await fetch(data.info.prev)
-                data = await respuesta.json()
-                contenedor.innerHTML = subirAHTML(data.results)
-            }
-            window.scrollTo({top: 0, behavior: 'smooth'})
-            previa()
-            pagina -= 1
-            paginaActual(pagina)
-        }
-    })
-    agregarEventoPersonajes()
-    paginaActual(pagina)
-}
-
-const agregarEventoDropdown = () =>{
-    const opciones = document.querySelectorAll('.option')
-    for(let i = 0; i < opciones.length; i++){
-        opciones[i].addEventListener('click', () =>{
-            let id = opciones[i].id
-            if(id === 'aliveOption'){
-                opcion('alive')
-                actualPage.innerHTML = 'Characters Alive'
-                dropdown.classList.remove('visible')
-                setTimeout(checkLightTheme, 1)
-            }else if(id === 'deadOption'){
-                opcion('dead')
-                actualPage.innerHTML = 'Characters Dead'
-                dropdown.classList.remove('visible')
-                setTimeout(checkLightTheme, 1)
-            }else if(id === 'unknownOption'){
-                opcion('unknown')
-                actualPage.innerHTML = 'Characters Unknown'
-                dropdown.classList.remove('visible')
-                setTimeout(checkLightTheme, 1)
-            }
-        })
-    }
-}
 
 lightTheme()
