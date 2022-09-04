@@ -39,8 +39,7 @@ nav{
         height: 15vh;
         flex-direction: column;
         position: relative;
-        top: 2.5rem;
-        margin-right: 2rem;
+        top: 30%;
         .dropdown__button{
             border: none;
             background: #656565;
@@ -89,13 +88,32 @@ nav{
     }
     .theme__wraper{
         margin-right: 1rem;
-        .theme__changer{
-            width: 1.5rem;
-            height: 1.5rem;
-            content: '';
-            background-color: #6d6d6d;
-            border-radius: 50%;
-            cursor: pointer;
+        input{
+            position: absolute; 
+            overflow: hidden; 
+            clip: rect(0 0 0 0); 
+            height:1px; 
+            width:1px; 
+            margin:-1px; 
+            padding:0;
+            border:0;
+        }
+        input + label{
+            padding-left:20px;
+            display:inline-block;
+            line-height:15px;
+            background-repeat:no-repeat;
+            background-position: 0 0;
+            font-size:15px;
+            vertical-align:middle;
+            cursor:pointer;
+        }
+        label{
+            user-select: none;
+            width: 2rem;
+            img{
+                width: 100%;
+            }
         }
     }
 }

@@ -16,12 +16,21 @@ const dropdownButton = document.querySelector('.dropdown__button')
 const dropdown = document.querySelector('.dropdown')
 const optionsDropdown = document.querySelector('.options__wraper')
 const lightThemeCheckbox = document.querySelector('#lightThemeCheckbox')
+const themeImg = document.querySelector('#theme')
 
 const checkLightTheme = () =>{
     if(getLocalStorage('lightTheme') === true){
+        lightThemeCheckbox.checked = true
         cardLightMode()
+        body.style.backgroundColor = '#F7ECDE'
+        actualPage.style.color = '#505050'
+        themeImg.src = './moon.png'
     }else if(getLocalStorage('lightTheme') !== true){
+        lightThemeCheckbox.checked = false
         cardDefault()
+        body.style.backgroundColor = '#202020'
+        actualPage.style.color = '#ece8e7'
+        themeImg.src = './sun.png'
     }
 }
 
@@ -57,8 +66,10 @@ const lightTheme = () =>{
             setLocalStorage('lightTheme', lightThemeCheckbox.checked)
             if(lightThemeCheckbox.checked === true){
                 activeLightMode()
+                themeImg.src = './moon.png'
             }else if(lightThemeCheckbox.checked !== true){
                 desactiveLightMode()
+                themeImg.src = './sun.png'
             }
         })
     })
@@ -85,6 +96,7 @@ const checkStat = () =>{
         fetch('https://rickandmortyapi.com/api/character/')
         .then(respuesta => respuesta.json())
         .then(data => {
+            setTimeout(checkLightTheme, 1)
             contenedor.innerHTML = subirAHTML(data.results)
             agregarEventoDropdown()
             nextPage.addEventListener('click', async() =>{
@@ -123,6 +135,7 @@ const checkStat = () =>{
         fetch(`https://rickandmortyapi.com/api/character/?status=${stat}`)
         .then(respuesta => respuesta.json())
         .then(data => {
+            setTimeout(checkLightTheme, 1)
             contenedor.innerHTML = subirAHTML(data.results)
             agregarEventoDropdown()
             nextPage.style.display = 'none'
