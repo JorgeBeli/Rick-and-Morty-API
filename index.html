@@ -13,23 +13,18 @@
         <nav>
             <h1>Home</h1>
             <p id="default">Reload</p>
-            <div class="dropdown__wraper">
-                <button class="dropdown__button" type="button">Status</button>
-                <div class="dropdown">
-                    <ul>
-                        <li class="options__wraper">
-                            <p class="option" id="aliveOption">Alive</p>
-                            <p class="option" id="deadOption">Dead</p>
-                            <p class="option" id="unknownOption">Unkown</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
             <div class="theme__wraper">
                 <input type="checkbox" id="lightThemeCheckbox">
                 <label for="lightThemeCheckbox"><img src="./sun.png" id="theme"></label>
             </div>
         </nav>
+        <div class="searcher__wraper">
+            <form id="searcher__form">
+                <label for="searcher"></label>
+                <input type="text" id="searcher" placeholder="Search character" autocomplete="off">
+                <input type="submit" id="searcher__submit" value="Search">
+            </form>
+        </div>
         <div class="characters__page">
 
         </div>

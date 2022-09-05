@@ -117,6 +117,41 @@ nav .theme__wraper label img {
   width: 100%;
 }
 
+.searcher__wraper {
+  width: fit-content;
+  margin: 1rem auto;
+}
+.searcher__wraper #searcher__form {
+  display: flex;
+  gap: 1rem;
+}
+.searcher__wraper #searcher__form #searcher {
+  width: 75vw;
+  height: 2rem;
+  padding: 0.35rem;
+  border-radius: 15px;
+  border: 0.25rem solid #424642;
+  background-color: #303030;
+}
+.searcher__wraper #searcher__form #searcher:focus {
+  border: 0.25rem solid #6d6d6d;
+  outline: none;
+  border-radius: 15px;
+}
+.searcher__wraper #searcher__form #searcher__submit {
+  background-color: #303030;
+  cursor: pointer;
+  margin: auto;
+  border-radius: 10px;
+  border: none;
+  width: 5rem;
+  height: 2rem;
+  transition: all 0.25s;
+}
+.searcher__wraper #searcher__form #searcher__submit:hover {
+  background-color: #424642;
+}
+
 .characters__page {
   margin: 2rem auto;
   text-align: center;
@@ -140,9 +175,12 @@ nav .theme__wraper label img {
 }
 
 .character__wraper {
+  width: fit-content;
+  margin: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 2.5vh;
+  column-gap: 2rem;
 }
 .character__wraper .personaje {
   display: grid;
