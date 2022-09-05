@@ -23,6 +23,7 @@ searcherForm.addEventListener('submit', (event) =>{
     fetch(`https://rickandmortyapi.com/api/character/?name=${searcher.value}`)
     .then(respuesta => respuesta.json())
     .then(data => {
+        contenedor.setAttribute(('style'),'display: grid;')
         searcherForm.reset()
         contenedor.innerHTML = subirAHTML(data.results)
         setTimeout(checkLightTheme, 1)
@@ -32,6 +33,7 @@ searcherForm.addEventListener('submit', (event) =>{
         nextPageStatus.style.display = 'flex'
         previousPageStatus.style.display = 'flex'
         let pagina = 1
+        paginaActual(pagina)
         nextPageStatus.addEventListener('click', async() =>{
             if(data.info.next === null){
                 nextPageStatus.disabled = true
@@ -73,7 +75,13 @@ searcherForm.addEventListener('submit', (event) =>{
     })
     .catch(() =>{
         contenedor.innerHTML = 'It seems that no one is called that'
-        contenedor.setAttribute(('style'),'display: grid; text-align: center;')
+        contenedor.setAttribute(('style'),'display: flex; text-align: center;')
+        nextPage.disabled = true
+        nextPage.style.cursor = 'not-allowed'
+        nextPage.style.color = '#303030'
+        previousPage.disabled = true
+        previousPage.style.cursor = 'not-allowed'
+        previousPage.style.color = '#303030'
     })
 })
 
