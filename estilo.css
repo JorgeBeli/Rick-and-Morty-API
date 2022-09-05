@@ -384,11 +384,11 @@ nav .theme__wraper label img {
   user-select: none;
   cursor: pointer;
 }
-.buttons :nth-child(1) {
+.buttons :nth-child(1), .buttons :nth-child(2) {
   cursor: not-allowed;
   color: #303030;
 }
-.buttons :nth-child(2) {
+.buttons :nth-child(3) {
   cursor: default;
   color: #fff;
 }

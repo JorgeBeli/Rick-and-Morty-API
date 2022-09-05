@@ -96,9 +96,12 @@ const checkStat = () =>{
         fetch('https://rickandmortyapi.com/api/character/')
         .then(respuesta => respuesta.json())
         .then(data => {
+            let pagina = 1
             setTimeout(checkLightTheme, 1)
             contenedor.innerHTML = subirAHTML(data.results)
             agregarEventoDropdown()
+            agregarEventoPersonajes()
+            paginaActual(pagina)
             nextPage.addEventListener('click', async() =>{
                 if(data.info.next === null){
                     nextPage.disabled = true
@@ -109,9 +112,13 @@ const checkStat = () =>{
                     data = await respuesta.json()
                     contenedor.innerHTML = subirAHTML(data.results)
                     agregarEventoDropdown()
+                    setTimeout(checkLightTheme, 1)
+                    pagina ++
+                    paginaActual(pagina)
                     previousPage.disabled = false
                     previousPage.style.cursor = 'pointer'
                     previousPage.style.color = '#fff'
+                    window.scrollTo({top: 0, behavior: 'smooth'})
                 }
             })
             previousPage.addEventListener('click', async() =>{
@@ -124,9 +131,13 @@ const checkStat = () =>{
                     data = await respuesta.json()
                     contenedor.innerHTML = subirAHTML(data.results)
                     agregarEventoDropdown()
+                    setTimeout(checkLightTheme, 1)
+                    pagina --
+                    paginaActual(pagina)
                     nextPage.disabled = false
                     nextPage.style.cursor = 'pointer'
                     nextPage.style.color = '#fff'
+                    window.scrollTo({top: 0, behavior: 'smooth'})
                 }
             })
         })
@@ -135,9 +146,12 @@ const checkStat = () =>{
         fetch(`https://rickandmortyapi.com/api/character/?status=${stat}`)
         .then(respuesta => respuesta.json())
         .then(data => {
+            let pagina = 1
+            paginaActual(pagina)
             setTimeout(checkLightTheme, 1)
             contenedor.innerHTML = subirAHTML(data.results)
             agregarEventoDropdown()
+            agregarEventoPersonajes()
             nextPage.style.display = 'none'
             previousPage.style.display = 'none'
             nextPageStatus.style.display = 'flex'
@@ -152,9 +166,13 @@ const checkStat = () =>{
                     data = await respuesta.json()
                     contenedor.innerHTML = subirAHTML(data.results)
                     agregarEventoDropdown()
+                    setTimeout(checkLightTheme, 1)
+                    pagina ++
+                    paginaActual(pagina)
                     previousPageStatus.disabled = false
                     previousPageStatus.style.cursor = 'pointer'
                     previousPageStatus.style.color = '#fff'
+                    window.scrollTo({top: 0, behavior: 'smooth'})
                 }
             })
             previousPageStatus.addEventListener('click', async() =>{
@@ -167,9 +185,13 @@ const checkStat = () =>{
                     data = await respuesta.json()
                     contenedor.innerHTML = subirAHTML(data.results)
                     agregarEventoDropdown()
+                    setTimeout(checkLightTheme, 1)
+                    pagina ++
+                    paginaActual(pagina)
                     nextPageStatus.disabled = false
                     nextPageStatus.style.cursor = 'pointer'
                     nextPageStatus.style.color = '#fff'
+                    window.scrollTo({top: 0, behavior: 'smooth'})
                 }
             })
         })

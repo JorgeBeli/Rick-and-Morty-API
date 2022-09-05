@@ -384,11 +384,11 @@ nav{
         user-select: none;
         cursor: pointer;
     }
-    :nth-child(1){
+    :nth-child(1), :nth-child(2){
         cursor: not-allowed;
         color: #303030;
     }
-    :nth-child(2){
+    :nth-child(3){
         cursor: default;
         color: #fff;
     }
