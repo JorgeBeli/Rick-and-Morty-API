@@ -181,6 +181,7 @@ nav .theme__wraper label img {
   grid-template-columns: 1fr 1fr;
   row-gap: 2.5vh;
   column-gap: 2rem;
+  color: #fff;
 }
 .character__wraper .personaje {
   display: grid;
@@ -417,6 +418,7 @@ nav .theme__wraper label img {
   gap: 0.5rem;
   margin: 1rem auto;
   margin-top: 3rem;
+  text-align: center;
 }
 .buttons .nav__buttons {
   user-select: none;

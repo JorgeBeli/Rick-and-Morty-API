@@ -179,6 +179,7 @@ nav{
     grid-template-columns: 1fr 1fr;
     row-gap: 2.5vh;
     column-gap: 2rem;
+    color: #fff;
     .personaje{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -417,6 +418,7 @@ nav{
     gap: .5rem;
     margin: 1rem auto;
     margin-top: 3rem;
+    text-align: center;
     .nav__buttons{
         user-select: none;
         cursor: pointer;

@@ -301,6 +301,8 @@ home.addEventListener('click', () => {
     contenedor.style.display = 'grid'
     personaje.style.display = 'none'
     botones.style.display = 'flex'
+    home.innerText = 'Home'
+    searcherForm.style.display = 'flex'
 })
 
 const enfocarPersonaje = () => {
@@ -308,6 +310,9 @@ const enfocarPersonaje = () => {
     personaje.style.display = 'flex'
     botones.style.display = 'none'
     vivoOMuerto()
+    home.innerText = 'Back'
+    searcherForm.style.display = 'none'
+    window.scrollTo({top: 200, behavior: 'smooth'})
 }
 
 const vivoOMuerto = () =>{
